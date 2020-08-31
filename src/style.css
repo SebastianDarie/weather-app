@@ -26,11 +26,11 @@ body {
 
 .content {
 	padding: 40px;
-	margin-top: 10px;
+	margin-top: 20px;
 }
 
 .header {
-	background: linear-gradient(to right, #b92b27, #1565c0);
+	background-color: #222;
 	height: 120px;
 	display: flex;
 	justify-content: center;
@@ -83,8 +83,7 @@ body {
 }
 
 .detail.bordered {
-	border-left: 1px solid #777;
-	border-right: 1px solid #777;
+	border-left: 2px solid #777;
 }
 
 .detail .title {
