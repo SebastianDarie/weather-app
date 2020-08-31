@@ -3,7 +3,16 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<script src="../skycons.js"></script>
+		<script
+			src="https://kit.fontawesome.com/20571f38a7.js"
+			crossorigin="anonymous"
+		></script>
+		<script
+			defer
+			src="https://cdnjs.cloudflare.com/ajax/libs/skycons/1396634940/skycons.min.js"
+			integrity="sha256-tZNzlXmrMrO9BLT6Gv4Y0LfAN8HdbZ7+LIuNf6WkFC0="
+			crossorigin="anonymous"
+		></script>
 		<link rel="stylesheet" href="style.css" />
 		<script defer src="index.js"></script>
 		<title>Weather App</title>
@@ -12,7 +21,7 @@
 		<div class="container">
 			<div class="header">
 				<div class="icon-container">
-					<canvas id="icon1" width="128" height="128"></canvas>
+					<img src="" alt="." />
 				</div>
 			</div>
 			<div class="content">
@@ -25,16 +34,19 @@
 				</div>
 				<div class="detail-section">
 					<div class="detail">
+						<canvas id="wind" width="100" height="100"></canvas>
 						<div class="title">Wind</div>
 						<div class="value" data-wind="">TBD</div>
 					</div>
 					<div class="detail bordered">
+						<canvas id="temp" width="100" height="100"></canvas>
 						<div class="title">Temperature</div>
 						<div class="value" data-temperature>TBD</div>
 					</div>
 					<div class="detail">
-						<div class="title">Precipitation</div>
-						<div class="value" data-precipitation>TBD</div>
+						<canvas id="hum" width="100" height="100"></canvas>
+						<div class="title">Humidity</div>
+						<div class="value" data-humidity>TBD</div>
 					</div>
 				</div>
 			</div>
@@ -45,6 +57,9 @@
 					data-city-search
 					placeholder="Enter Location"
 				/>
+				<button class="city-search-button" type="submit">
+					<i class="fas fa-search"></i>
+				</button>
 			</div>
 		</div>
 	</body>
