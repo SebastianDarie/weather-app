@@ -21,6 +21,9 @@ const humidityElement = document.querySelector('[data-humidity]')
 const pressureElement = document.querySelector('[data-pressure]')
 const windElement = document.querySelector('[data-wind]')
 const windDirectionElement = document.querySelector('[data-wind-dir]')
+const switchElement = document.querySelector('[data-unit-toggle]')
+const metricSwitch = document.getElementById('cel')
+const imperialSwitch = document.getElementById('fah')
 const img = document.querySelector('img')
 
 const search = document.querySelector('.city-search-button')
@@ -37,6 +40,18 @@ async function fetchWeather(e) {
 		const data = await res.json()
 
 		setWeather(data)
+
+		switchElement.addEventListener('click', () => {
+			initializeSwitch(data)
+		})
+
+		metricSwitch.addEventListener('change', () => {
+			setWeather(data)
+		})
+
+		imperialSwitch.addEventListener('change', () => {
+			setWeather(data)
+		})
 	} catch (err) {
 		alert('You have entered an invalid location or something went wrong')
 	}
@@ -50,18 +65,45 @@ function setWeather(data) {
 	locationElement.textContent = data.name + ', ' + data.sys.country
 	statusElement.textContent =
 		data.weather[0].main + ' - ' + data.weather[0].description
-	temperatureElement.textContent = Math.round(data.main.temp) + ' °C'
-	realTempElement.textContent = `Feels like: ${Math.round(
-		data.main.feels_like
-	)} °C`
+	windElement.textContent = setWindSpeed(data)
+	windDirectionElement.textContent = setWindDirection(data)
+	temperatureElement.textContent = setTemperature(data)
+	realTempElement.textContent = 'Feels like: ' + setRealTemp(data)
 	humidityElement.textContent = data.main.humidity + '%'
 	pressureElement.textContent = data.main.pressure + ' pHa'
-	windElement.textContent = data.wind.speed + ' km/h'
-	windDirectionElement.textContent = setWindDirection(data)
 
 	const iconcode = data.weather[0].icon
 	const iconurl = `http://openweathermap.org/img/wn/${iconcode}@2x.png`
 	img.setAttribute('src', iconurl)
+
+	displayUnits()
+}
+
+function setTemperature(data) {
+	let temp = data.main.temp
+	if (!isMetric()) {
+		temp = data.main.temp * (9 / 5) + 32
+	}
+
+	return Math.round(temp * 10) / 10
+}
+
+function setRealTemp(data) {
+	let realTemp = data.main.feels_like
+	if (!isMetric()) {
+		realTemp = data.main.feels_like * (9 / 5) + 32
+	}
+
+	return Math.round(realTemp * 10) / 10
+}
+
+function setWindSpeed(data) {
+	let speed = data.wind.speed
+	if (!isMetric()) {
+		speed = data.wind.speed / 1.609
+	}
+
+	return Math.round(speed * 10) / 10
 }
 
 function setWindDirection(data) {
@@ -88,4 +130,21 @@ function setWindDirection(data) {
 	const num = Math.round(degree / 22.5 + 0.5)
 
 	return arr[num % 16]
+}
+
+function isMetric() {
+	return metricSwitch.checked
+}
+
+function displayUnits() {
+	temperatureElement.textContent += isMetric() ? ' °C' : ' °F'
+	realTempElement.textContent += isMetric() ? '°C' : '°F'
+	windElement.textContent += isMetric() ? ' kph' : ' mph'
+}
+
+function initializeSwitch(data) {
+	let metricUnits = !isMetric()
+	metricSwitch.checked = metricUnits
+	imperialSwitch.checked = !metricUnits
+	setWeather(data)
 }

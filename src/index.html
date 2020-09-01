@@ -31,7 +31,15 @@
 					<div class="location" data-location>
 						To Find The Weather
 					</div>
+					<div class="unit">
+						<label for="cel">°C</label>
+						<input type="radio" id="cel" name="unit" checked />
+						<button class="unit-toggle" data-unit-toggle></button>
+						<label for="fah">°F</label>
+						<input type="radio" id="fah" name="unit" />
+					</div>
 				</div>
+
 				<div class="detail-section">
 					<div class="detail">
 						<canvas id="wind" width="100" height="100"></canvas>
